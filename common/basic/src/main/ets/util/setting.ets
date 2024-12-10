@@ -1,6 +1,7 @@
 // 用户配置： 广告信息 token 用户信息之类的
 import { Context } from "@kit.AbilityKit";
 import { preferences } from "@kit.ArkData";
+import { USER_SETTING, USER_SETTING_AD } from "../constants";
 import { AdvertClass } from "../models";
 
 // 定义默认广告配置类
@@ -12,7 +13,7 @@ export const defaultAd: AdvertClass = {
 
 export class UserSettingClass{
 
-  // 获取用户的广告持久化仓库
+  // 获取用户的首选项/上下文
   context: Context
 
   // 初始化必须传递Context
@@ -25,7 +26,7 @@ export class UserSettingClass{
     // 因为Context分为UIAbility的Context和组件的Context，
     // 所以直接get可能会获错，使用上面初始化传递的
     // 传递两个参数，Context和仓库的名字
-    return preferences.getPreferencesSync(this.context,{name:'advert'})
+    return preferences.getPreferencesSync(this.context,{name:USER_SETTING_AD})
   }
 
   //保存广告配置到持久化存储中
@@ -41,9 +42,9 @@ export class UserSettingClass{
   getAdvert(): AdvertClass{
     const store = this.getStore() // 获取持久化对象
     // 获取advert对应的持久化信息  要两个参数，key和未获取到的默认值
-    const str = store.getSync('advert',JSON.stringify(defaultAd)) as string
+    const str = store.getSync(USER_SETTING,JSON.stringify(defaultAd)) as string
     // 把获取到的数据转成AdvertClass对象返回
-    return JSON.parse(str)
+    return JSON.parse(str) as AdvertClass
   }
 
 }
