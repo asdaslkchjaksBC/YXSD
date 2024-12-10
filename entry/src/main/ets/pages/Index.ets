@@ -1,3 +1,7 @@
+import { loginAPI } from 'basic';
+
+loginAPI()
+
 @Entry
 @Component
 struct Index {
@@ -18,3 +22,4 @@ struct Index {
     .width('100%')
   }
 }
+
