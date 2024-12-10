@@ -36,11 +36,15 @@ export default class EntryAbility extends UIAbility {
 
     // 如果要显示广告- 不能直接显示首页
     if (ad.showAd) {
-      windowStage.loadContent('pages/Advert')
-    } else {
-      // 如果不显示广告- 直接显示首页
-      windowStage.loadContent('pages/Index');
+      // 如何创建一个子页面，显示子页面 和 销毁子页面
+      // 创建子页面
+      const win = await windowStage.createSubWindow('ad_window')
+      await win.showWindow() // 打开子页面
+      //   参数传入子页面的路径
+      win.setUIContent('pages/Start/Start') // 显示在子窗口上的页面
     }
+
+    windowStage.loadContent('pages/Index ')
   }
 
   onWindowStageDestroy(): void {
